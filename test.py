@@ -16,55 +16,56 @@ def merge(A, B):
 
 
 def insert_sort(a):
-		for i in range(len(a)):
-			cv = a[i]
-			j = i-1
-			while j > 0 and a[j] > cv:
-				a[j+1] = a[j]
-				j = j - 1
-			a[j+1] = cv
-		return a
+    for i in range(len(a)):
+        cv = a[i]
+        j = i-1
+        while j > 0 and a[j] > cv:
+            a[j+1] = a[j]
+            j = j - 1
+        a[j+1] = cv
+    return a
 
 def merge_sort(a):
-	if len(a) <= 1:
-		return a
-	left = a[:int(len(a)/2)+1]
-	right = a[int(len(a)/2)+1:]
-	return merge(merge_sort(left), merge_sort(right))
+    if len(a) <= 1:
+        return a
+    left = a[:int(len(a)/2)]
+    right = a[int(len(a)/2):]
+    return merge(merge_sort(left), merge_sort(right))
 
 
 def is_sorted(a):
-	for i in range(len(a)-1):
-		if a[i] > a[i+1]:
-			return False
-	return True
+    for i in range(len(a)-1):
+        if a[i] > a[i+1]:
+            return False
+    return True
 
 
 def main():
-	ns = np.linspace(10000, 100000, 10)
+    ns = np.linspace(10000, 100000, 10)
 
-	for n in ns:
-    
-		a = [np.random.randint(0,100) for i in range(1000)]
-		b = np.copy(a)
-		# call insert_sort and  calculate the time
-		start = timeit.timeit()
-		sorted_a = insert_sort(b)
-		if not is_sorted(sorted_a):
-				print("ERROR")
-		end = timeit.timeit()
-		t1 = end-start
+    for n in ns:
 
-		# call merge_sort and  calculate the time
-		start = timeit.timeit()
-		sorted_a = merge_sort(a)
-		if not is_sorted(sorted_a):
-				print("ERROR")
-		end = timeit.timeit()
-		t2 = end-start
+        a = [np.random.randint(0,100) for i in range(int(n))]
+        b = np.copy(a)
 
-		print("%d %f %f" % (n, t1, t2))
+        # call insert_sort and  calculate the time
+        start = timeit.timeit()
+        sorted_a = insert_sort(b)
+        if not is_sorted(sorted_a):
+            print("ERROR")
+        end = timeit.timeit()
+        t1 = end-start
+
+        # call merge_sort and  calculate the time
+        start = timeit.timeit()
+        sorted_a = merge_sort(a)
+        if not is_sorted(sorted_a):
+            print("ERROR")
+        end = timeit.timeit()
+        t2 = end-start
+
+        print("%d %f %f" % (n, t1, t2))
 
 
 if __name__ == "__main__":
-	main()
+    main()
