@@ -1,5 +1,5 @@
 import numpy as np
-import timeit
+import time
 
 def merge(A, B):
 		result = []
@@ -19,7 +19,7 @@ def insert_sort(a):
     for i in range(len(a)):
         cv = a[i]
         j = i-1
-        while j > 0 and a[j] > cv:
+        while j >= 0 and a[j] > cv:
             a[j+1] = a[j]
             j = j - 1
         a[j+1] = cv
@@ -49,19 +49,19 @@ def main():
         b = np.copy(a)
 
         # call insert_sort and  calculate the time
-        start = timeit.timeit()
+        start = time.time()
         sorted_a = insert_sort(b)
         if not is_sorted(sorted_a):
-            print("ERROR")
-        end = timeit.timeit()
+            print("ERROR1")
+        end = time.time()
         t1 = end-start
 
         # call merge_sort and  calculate the time
-        start = timeit.timeit()
+        start = time.time()
         sorted_a = merge_sort(a)
         if not is_sorted(sorted_a):
-            print("ERROR")
-        end = timeit.timeit()
+            print("ERROR2")
+        end = time.time()
         t2 = end-start
 
         print("%d %f %f" % (n, t1, t2))
