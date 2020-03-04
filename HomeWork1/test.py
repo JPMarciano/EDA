@@ -1,5 +1,7 @@
 import numpy as np
 import time
+import pandas
+
 
 def merge(A, B):
 		result = []
