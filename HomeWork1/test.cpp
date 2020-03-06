@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <iostream>
-#include <chrono>
+#include <ctime>
 
-using namespace std::chrono;
+using namespace std;
 
 void print(int a[], int tam){
 	for(int i=0; i<tam; i++){
@@ -77,51 +77,65 @@ bool is_sorted(int a[], int tam){
 	}
 	return true;
 }
+struct timespec tstart, tend;
+
+void start()
+{
+	clock_gettime(CLOCK_MONOTONIC, &tstart);
+}
+
+void end()
+{
+	clock_gettime(CLOCK_MONOTONIC, &tend);
+	cout << (tend.tv_sec - tstart.tv_sec) + (tend.tv_nsec - tstart.tv_nsec) / (1E9) << endl;
+}
 
 
 int main(){
 
 	int testes[10];
 	
-	int t1,t2;
-	
-	time_point<system_clock> start, end;
+	float t1,t2;
 	
 	for(int i=1; i<=10; i++){
 		testes[i-1]=10000*i;
 	}
 	
-	testes[0]=50;
-	
 	for(int i=0; i<10; i++){
 		srand(1024);
 		
-		int a[testes[i]];
+		int *a = new int[testes[i]];
 		
-		int *sorted_a;
+		int *sorted_a, *sorted_b;
 		
 		int b[testes[i]];
+		int c[testes[i]];
 		
 		for(int j =0; j<testes[i]; j++){
-			a[j] = rand();
+			a[j] = rand() % testes[i]*2;
 		}
 		
 		memcpy(b, a, testes[i]*sizeof(int));
+		memcpy(c, a, testes[i]*sizeof(int));
 		
 		// call insert_sort and  calculate the time
-		start = system_clock::now();
+		start();
 		sorted_a = insertion_sort(b, testes[i]);
-		end = system_clock::now();
+		end();
+		
 		if (!(is_sorted(sorted_a, testes[i]))){
 			std::cout << "ERROR1";
 		}
-		t1 = duration_cast<seconds> (end-start).count();
+		// t1
+		
 		// call merge_sort and  calculate the time
-		sorted_a = merge_sort(a, testes[i]);
-		if (!(is_sorted(sorted_a, testes[i]))){
+		start();
+		sorted_b = merge_sort(c, testes[i]);
+		end();
+		if (!(is_sorted(sorted_b, testes[i]))){
 			std::cout << "ERROR2";
 		}
-
+		// t2
 		//print("%d %f %f" % (n, t1, t2))
 	}
 }

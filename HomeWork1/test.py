@@ -1,6 +1,5 @@
 import numpy as np
 import time
-import pandas
 
 
 def merge(A, B):
@@ -44,7 +43,6 @@ def is_sorted(a):
 
 def main():
     ns = np.linspace(10000, 100000, 10)
-    
     for n in ns:
 
         a = [np.random.randint(0,100) for i in range(int(n))]
