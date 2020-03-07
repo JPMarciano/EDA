@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
+#include <cstring>
 
 using namespace std;
 
@@ -77,17 +78,17 @@ bool is_sorted(int a[], int tam){
 	}
 	return true;
 }
-struct timespec tstart, tend;
+struct timespec tsbegin, tsend;
 
-void start()
+void begin()
 {
-	clock_gettime(CLOCK_MONOTONIC, &tstart);
+	clock_gettime(CLOCK_MONOTONIC, &tsbegin);
 }
 
-void end()
+float end()
 {
-	clock_gettime(CLOCK_MONOTONIC, &tend);
-	cout << (tend.tv_sec - tstart.tv_sec) + (tend.tv_nsec - tstart.tv_nsec) / (1E9) << endl;
+	clock_gettime(CLOCK_MONOTONIC, &tsend);
+	return (tsend.tv_sec - tsbegin.tv_sec) + (tsend.tv_nsec - tsbegin.tv_nsec) / (1E9);
 }
 
 
@@ -106,36 +107,83 @@ int main(){
 		
 		int *a = new int[testes[i]];
 		
-		int *sorted_a, *sorted_b;
+		int *sorted_c, *sorted_b;
 		
 		int b[testes[i]];
 		int c[testes[i]];
 		
 		for(int j =0; j<testes[i]; j++){
-			a[j] = rand() % testes[i]*2;
+			a[j] = rand();
 		}
 		
-		memcpy(b, a, testes[i]*sizeof(int));
-		memcpy(c, a, testes[i]*sizeof(int));
+		//copy a into b and c
+		for(int i =0; i<testes[i]; i++){
+			b[i] = a[i];
+			c[i] = a[i];
+		}
+
 		
-		// call insert_sort and  calculate the time
-		start();
-		sorted_a = insertion_sort(b, testes[i]);
-		end();
+		// call insert_sort and  calculate the time for a random array
+		begin();
+		sorted_b = insertion_sort(b, testes[i]);
+		t1 = end();
 		
-		if (!(is_sorted(sorted_a, testes[i]))){
+		if (!(is_sorted(sorted_b, testes[i]))){
 			std::cout << "ERROR1";
 		}
-		// t1
 		
-		// call merge_sort and  calculate the time
-		start();
-		sorted_b = merge_sort(c, testes[i]);
-		end();
-		if (!(is_sorted(sorted_b, testes[i]))){
+		// call merge_sort and  calculate the time for a random array
+		begin();
+		sorted_c = merge_sort(c, testes[i]);
+		t2 = end();
+		if (!(is_sorted(sorted_c, testes[i]))){
 			std::cout << "ERROR2";
 		}
-		// t2
-		//print("%d %f %f" % (n, t1, t2))
+
+		std::cout << "Random, " << testes[i] << ", " << t1 << ", " << t2 << std::endl;
+
+		// call insert_sort and  calculate the time for an ascending array
+		begin();
+		sorted_b = insertion_sort(sorted_b, testes[i]);
+		t1 = end();
+		
+		if (!(is_sorted(sorted_b, testes[i]))){
+			std::cout << "ERROR1";
+		}
+		
+		// call merge_sort and  calculate the time for an ascending array
+		begin();
+		sorted_c = merge_sort(sorted_c, testes[i]);
+		t2 = end();
+		if (!(is_sorted(sorted_c, testes[i]))){
+			std::cout << "ERROR2";
+		}
+
+		std::cout << "Ascending, " << testes[i] << ", " << t1 << ", " << t2 << std::endl;
+
+		// reverse
+		for(int j = 0; j<testes[i]; j++){
+			b[j] = sorted_b[testes[i]-j-1];
+			c[j] = sorted_b[testes[i]-j-1];
+		}
+
+		// call insert_sort and  calculate the time for a descending array
+		begin();
+		sorted_b = insertion_sort(b, testes[i]);
+		t1 = end();
+		
+		if (!(is_sorted(sorted_b, testes[i]))){
+			std::cout << "ERROR1";
+		}
+		
+		// call merge_sort and  calculate the time for a descending array
+		begin();
+		sorted_c = merge_sort(c, testes[i]);
+		t2 = end();
+		if (!(is_sorted(sorted_c, testes[i]))){
+			std::cout << "ERROR2";
+		}
+
+		std::cout << "Descending, " << testes[i] << ", " << t1 << ", " << t2 << std::endl;
 	}
 }

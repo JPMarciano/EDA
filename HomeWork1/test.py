@@ -24,7 +24,6 @@ def insert_sort(a):
             a[j+1] = a[j]
             j = j - 1
         a[j+1] = cv
-    return a
 
 def merge_sort(a):
     if len(a) <= 1:
@@ -45,27 +44,67 @@ def main():
     ns = np.linspace(10000, 100000, 10)
     for n in ns:
 
-        a = [np.random.randint(0,100) for i in range(int(n))]
-        b = np.copy(a)
+        a = [np.random.randint(0,1000000) for i in range(int(n))]
+        b = a.copy()
 
-        # call insert_sort and  calculate the time
+        # call insert_sort and  calculate the time for a random array
         start = time.time()
-        sorted_a = insert_sort(b)
-        if not is_sorted(sorted_a):
-            print("ERROR1")
+        insert_sort(a)
         end = time.time()
+        if not is_sorted(a):
+            print("ERROR1")
         t1 = end-start
 
-        # call merge_sort and  calculate the time
+        # call merge_sort and  calculate the time for a random array
         start = time.time()
-        sorted_a = merge_sort(a)
+        sorted_a = merge_sort(b)
+        end = time.time()
         if not is_sorted(sorted_a):
             print("ERROR2")
-        end = time.time()
         t2 = end-start
 
-        print("%d %f %f" % (n, t1, t2))
-
+        print("Random: %d %f %f" % (n, t1, t2))
+        
+        
+        # call insert_sort and  calculate the time for an ascending array
+        start = time.time()
+        insert_sort(a)
+        end = time.time()
+        if not is_sorted(a):
+            print("ERROR1")
+        t1 = end-start
+        
+        # call merge_sort and  calculate the time for an ascending array
+        start = time.time()
+        sorted_a = merge_sort(a)
+        end = time.time()
+        if not is_sorted(sorted_a):
+            print("ERROR2")
+        t2 = end-start
+        
+        print("Ascending: %d %f %f" % (n, t1, t2))
+        
+        a.reverse()
+        sorted_a.reverse()
+        
+        # call insert_sort and  calculate the time for a descending array
+        start = time.time()
+        insert_sort(a)
+        end = time.time()
+        if not is_sorted(a):
+            print("ERROR1")
+        t1 = end-start
+        
+        # call merge_sort and  calculate the time for a descending array
+        start = time.time()
+        sorted_a = merge_sort(sorted_a)
+        end = time.time()
+        if not is_sorted(sorted_a):
+            print("ERROR2")
+        t2 = end-start
+        
+        print("Descending: %d %f %f" % (n, t1, t2))
+        
 
 if __name__ == "__main__":
     main()
