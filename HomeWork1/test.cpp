@@ -14,25 +14,29 @@ void print(int a[], int tam){
 int* merge(int a[], int b[], int tam1, int tam2){
 	int *result = new int[tam1 + tam2];
 	
-	int x=0;
-	int j=0;
+	int x = 0, j = 0, i = 0;
 	
-	for(int i=0; i<tam1; i++){
-		while(a[i]>=b[j] && j<tam2){
-			result[x] = b[j];
+	while(i<tam1 and j<tam2){
+		if (a[i]<b[j]){
+			result[x] = a[i++];
 			x++;
-			j++;
 		}
-		result[x]=a[i];
+		else{
+			result[x] = b[j++];
+			x++;
+		}
+	}
+	
+	while(i<tam1){
+		result[x] = a[i++];
 		x++;
 	}
+	
 	while(j<tam2){
-		result[x]=b[j];
+		result[x] = b[j++];
 		x++;
-		j++;
 	}
-
-
+	
 	return result;
 }
 
