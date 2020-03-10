@@ -19,6 +19,8 @@ private:
 	
 public:
 	
+	int size=0;
+	
 	LinkedList(){
 		this->pRoot = NULL;
 	}
@@ -35,7 +37,7 @@ public:
 		}
 		Node *pNew = new Node(v);
 		pLast->pNext = pNew;
-		
+		size++;
 	}
 	
 	void print(){
@@ -47,16 +49,56 @@ public:
 		cout << endl;
 	}
 	
+	Node* find(int v){
+		Node *pLast = this->pRoot;
+		while(pLast!=NULL && pLast->data!=v){
+			pLast = pLast->pNext;
+		}
+		
+		if (pLast!=0){
+			return pLast;
+		}else{
+			return NULL;
+		}
+		
+	}
+	
+	void dumb_sort(){
+		Node *sec = this->pRoot->pNext, *first = this->pRoot, *ant, *aux;
+		while(sec!=NULL){
+			ant->pNext = sec;
+			aux = sec->pNext;
+			sec->pNext = first;
+			first->pNext=aux;
+			
+			while(sec!=NULL && sec->data >= first->data){
+				ant = first;
+				first = sec;
+				sec = sec->pNext;
+			}
+			
+		}	
+	}
+	
 };
 
 
 
 int main(){
 	
+	Node *p;
+	
 	LinkedList list;
 	list.insert(3);
 	list.insert(43);
 	list.insert(1);
+	list.print();
+	
+	p = list.find(3);
+	
+	if(p!=0) cout << p->data << endl; else cout << "ponteiro nulo" << endl;
+	
+	list.dumb_sort();
 	list.print();
 	
 	return 0;
