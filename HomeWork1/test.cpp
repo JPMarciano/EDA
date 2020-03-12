@@ -13,9 +13,9 @@ void print(int a[], int tam){
 
 int* merge(int a[], int b[], int tam1, int tam2){
 	int *result = new int[tam1 + tam2];
-	
+
 	int x = 0, j = 0, i = 0;
-	
+
 	while(i<tam1 and j<tam2){
 		if (a[i]<b[j]){
 			result[x] = a[i++];
@@ -26,17 +26,17 @@ int* merge(int a[], int b[], int tam1, int tam2){
 			x++;
 		}
 	}
-	
+
 	while(i<tam1){
 		result[x] = a[i++];
 		x++;
 	}
-	
+
 	while(j<tam2){
 		result[x] = b[j++];
 		x++;
 	}
-	
+
 	return result;
 }
 
@@ -99,43 +99,43 @@ float end()
 int main(){
 
 	int testes[10];
-	
+
 	float t1,t2;
-	
+
 	for(int i=1; i<=10; i++){
 		testes[i-1]=10000*i;
 	}
-	
+
 	for(int i=0; i<10; i++){
 		srand(1024);
-		
+
 		int *a = new int[testes[i]];
-		
+
 		int *sorted_c, *sorted_b;
-		
+
 		int b[testes[i]];
 		int c[testes[i]];
-		
+
 		for(int j =0; j<testes[i]; j++){
 			a[j] = rand();
 		}
-		
+
 		//copy a into b and c
 		for(int i =0; i<testes[i]; i++){
 			b[i] = a[i];
 			c[i] = a[i];
 		}
 
-		
+
 		// call insert_sort and  calculate the time for a random array
 		begin();
 		sorted_b = insertion_sort(b, testes[i]);
 		t1 = end();
-		
+
 		if (!(is_sorted(sorted_b, testes[i]))){
 			std::cout << "ERROR1";
 		}
-		
+
 		// call merge_sort and  calculate the time for a random array
 		begin();
 		sorted_c = merge_sort(c, testes[i]);
@@ -143,18 +143,18 @@ int main(){
 		if (!(is_sorted(sorted_c, testes[i]))){
 			std::cout << "ERROR2";
 		}
-
-		std::cout << "Random, " << testes[i] << ", " << t1 << ", " << t2 << std::endl;
+        std::cout << "Random" << std::endl;
+		std::cout << "(" << testes[i] << ", " << t1 << ", " << t2 << ")" << std::endl;
 
 		// call insert_sort and  calculate the time for an ascending array
 		begin();
 		sorted_b = insertion_sort(sorted_b, testes[i]);
 		t1 = end();
-		
+
 		if (!(is_sorted(sorted_b, testes[i]))){
 			std::cout << "ERROR1";
 		}
-		
+
 		// call merge_sort and  calculate the time for an ascending array
 		begin();
 		sorted_c = merge_sort(sorted_c, testes[i]);
@@ -162,8 +162,8 @@ int main(){
 		if (!(is_sorted(sorted_c, testes[i]))){
 			std::cout << "ERROR2";
 		}
-
-		std::cout << "Ascending, " << testes[i] << ", " << t1 << ", " << t2 << std::endl;
+        std::cout << "Ascending" << std::endl;
+		std::cout << "(" << testes[i] << ", " << t1 << ", " << t2 << ")" << std::endl;
 
 		// reverse
 		for(int j = 0; j<testes[i]; j++){
@@ -175,11 +175,11 @@ int main(){
 		begin();
 		sorted_b = insertion_sort(b, testes[i]);
 		t1 = end();
-		
+
 		if (!(is_sorted(sorted_b, testes[i]))){
 			std::cout << "ERROR1";
 		}
-		
+
 		// call merge_sort and  calculate the time for a descending array
 		begin();
 		sorted_c = merge_sort(c, testes[i]);
@@ -187,7 +187,7 @@ int main(){
 		if (!(is_sorted(sorted_c, testes[i]))){
 			std::cout << "ERROR2";
 		}
-
-		std::cout << "Descending, " << testes[i] << ", " << t1 << ", " << t2 << std::endl;
+        std::cout << "Descending" << std::endl;
+		std::cout << "(" << testes[i] << ", " << t1 << ", " << t2 << ")" << std::endl;
 	}
 }

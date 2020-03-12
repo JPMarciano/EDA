@@ -62,8 +62,8 @@ def main():
         if not is_sorted(sorted_a):
             print("ERROR2")
         t2 = end-start
-
-        print("Random: %d %f %f" % (n, t1, t2))
+	print("Random")
+        print("(%d, %f, %f)" % (n, t1, t2))
         
         
         # call insert_sort and  calculate the time for an ascending array
@@ -81,8 +81,8 @@ def main():
         if not is_sorted(sorted_a):
             print("ERROR2")
         t2 = end-start
-        
-        print("Ascending: %d %f %f" % (n, t1, t2))
+        print("Ascending")
+        print("(%d, %f, %f)" % (n, t1, t2))
         
         a.reverse()
         sorted_a.reverse()
@@ -102,8 +102,8 @@ def main():
         if not is_sorted(sorted_a):
             print("ERROR2")
         t2 = end-start
-        
-        print("Descending: %d %f %f" % (n, t1, t2))
+        print("Descending")
+        print("(%d, %f, %f)" % (n, t1, t2))
         
 
 if __name__ == "__main__":
