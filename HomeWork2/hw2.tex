@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{enumitem}
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+
+% set the default code style
+\lstset{
+    language=C++,
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=none, % display line numbers on the left
+    commentstyle=\color{mygreen}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red}, % string color
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+\parindent0in
+\pagestyle{plain}
+\thispagestyle{plain}
+
+\newcommand{\assignment}{Homework 2}
+\newcommand{\duedate}{March 27, 2020}
+
+
+% \renewcommand\thesubsection{\arabic{subsection}}
+
+\title{Homework 2}
+\date{}
+
+\begin{document}
+
+Fundação Getulio Vargas\hfill\\
+Estruturas de Dados e Algoritmos\hfill\textbf{\assignment}\\
+Prof.\ Jorge Poco\hfill\textbf{Due:} \duedate\\
+\smallskip\hrule\bigskip
+
+{\let\newpage\relax\maketitle}
+\maketitle
+
+
+\section{Growth of Functions [2pts]}
+
+\begin{enumerate}[label=\Alph*]
+  \item For each of the following pairs of functions, either $f(n)$ is in $O(g(n))$, $f(n)$ is in $\Omega(g(n))$, or $f(n) = \Theta(g(n))$. Determine which relationship is correct and briefly explain why.
+    \begin{itemize}
+      \item \textbf{(0.25pt)} $f(n) = \log n^2$; $g(n) = \log n + 5$
+      \item \textbf{(0.25pt)} $f(n) = \log^2 n$; $g(n) = \log n$
+      \item \textbf{(0.25pt)} $f(n) = n\log n + n$; $g(n) = \log n$
+      \item \textbf{(0.25pt)} $f(n) = 2^n$; $g(n) = 10n^2$
+    \end{itemize}
+  
+  \item \textbf{(0.5pt)} Prove that $n^3 -3n^2 -n+1 = \Theta(n^3)$.
+  \item \textbf{(0.5pt)} Prove that $n^2 = O(2^n)$.
+  
+\end{enumerate}
+
+\section{Recurrence Equations [2pts]}
+Solve the following equations and give their order of complexity.
+In class, we saw four methods to solve this type of problem. In this case, the exercises from A to F you will have to use the characteristic equation method. For this, you have to study the attached document ``recurrencias.pdf". In that document, you can find an explanation of the technique and examples of how to solve them; it is very didactic. If you have some doubts, post a question through the Classroom.
+
+
+\begin{enumerate}[label=\Alph*]
+  \item \textbf{(0.25pt)} $T(n) = 3T(n-1) + 4T(n-2) \mbox{ if } n>1; T(0)=0; T(1)=1$
+  \item \textbf{(0.25pt)} $T(n) = 2T(n-1) - (n+5)3^n \mbox{ if } n>0; T(0)=0$
+  
+  
+  \item \textbf{(0.25pt)} $T(n) = 4T(n/2) + n^2, \mbox{if } n>4; T(0)=0; \mbox{n power of 2 }; T(1)=1; T(2)=8$
+  \item \textbf{(0.25pt)} $T(n) = 2T(n/2) + n\log n \mbox{ if } n>1; \mbox{n power of 2}$
+  
+  \item \textbf{(0.25pt)} $T(n) = T(n-1) + 2T(n-2)-2T(n-3) \mbox{ if } n>1; T(n)=9n^2-15n+106 \mbox{ if } n=0,1,2$
+  \item \textbf{(0.25pt)} $T(n)= (3/2)T(n/2) - (1/2)T(n/4)- (1/2) \mbox{ if } n>2; T(1)=1; T(2)=3/2$
+  
+  \item \textbf{(0.25pt)} $T(n) = 3T(n/9) + n^2 \mbox{ (using recurrence tree)}$
+  \item \textbf{(0.25pt)} $T(n) = 4T(n/2) + cn; T(1)=1  \mbox{ (using recurrence tree)}$
+\end{enumerate}
+
+
+\section{LinkedList Improvements [6pts]}
+
+\begin{enumerate}[label=\Alph*]
+  \item \textbf{(1.0pt) Insert/remove:} The file ``list.cpp" has the base code of the LinkedList class. In this class, we are implementing the ``find" function using double pointers, so that we can use it in the ``insert" and ``remove" functions. Your job is to implement these two functions by following the comments in the base code.
+  
+  
+  \item \textbf{(1.0pt) Constructor:} You must improve the constructor. In this version, we must be able to create a list using one of the following two options:
+  
+\begin{lstlisting}
+int main() {
+    // Option 1: Variadic Templates
+    LinkedList list1(1, 2, 10, 2, 3);
+    list1.print();
+    // Option 2: Initialization List
+    LinkedList list2({1, 2, 10, 2, 3});
+    list1.print();
+}
+\end{lstlisting}
+
+ For the first option you might use the \emph{initializer\_list} from STL and for the second option the \emph{Variadic Templates} feature. An example for both cases can be found at \url{https://bit.ly/2EFy4fc}. Any of them is a valid answer but I recommend to try both options. 
+  
+  \item \textbf{(0.5pt) Destructor:} Your job here is to release the dynamic memory reserved by the new operator. In this method, you must call \lstinline|delete pNode| for each node in the list. To check that your code is working print something in the Node destructor to check that all the nodes are destructed.
+  
+  \item \textbf{(1.0pt) Templates:} Modify your class so it must support any data type. Remember we saw templates in classes. The following code should work if succeed this step.
+  
+\begin{lstlisting}
+int main() {
+    // create a linked list for three data types
+    LinkedList<int> ilist(1, 10, 2);
+    ilist.print();
+    // output: 1 10 2 
+    LinkedList<float> flist(1.2, 1.4, 100000);
+    flist.print();
+    // output: 1.2 1.4 100000 
+    LinkedList<std::string> slist("one", "two", "three");
+    slist.print();
+    // output: one two three 
+}
+\end{lstlisting}
+  
+  \item \textbf{(1.5pt) Iterators:} Here, you must implement all the necessary to make your LinkedList to work using iterators. It should be similar to the STL data structures in C++. The following code should work if you succeed.
+  
+\begin{lstlisting}
+int main() {
+    LinkedList<int> ilist(1, 2, 10, 2, 3);
+    LinkedList<int>::Iterator it;
+    for (it=ilist.begin(); it!=ilist.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    cout << endl;
+}
+\end{lstlisting}
+
+Just because this might be your first-time implementation and Iterator, you must include the following class inside your LinkedList class. Be careful, the code below is only a skeleton, you have to implement the methods. 
+
+\begin{lstlisting}
+class Iterator {
+public:
+    Node<T> *pNodo;
+public:
+    Iterator() { ... }
+    Iterator(Node<T> *p) { ... }
+
+    bool operator!=(Iterator it) { ... }
+    Iterator operator++() { ... }
+    T& operator*() { ... }
+};
+\end{lstlisting}
+
+In addition, you have to implement the following methods in the LinkedList class. 
+
+\begin{lstlisting}
+    Iterator begin()  { ... }
+    Iterator end() { ... }
+\end{lstlisting}
+  
+  \item \textbf{(1.0pt) Exceptions:} Our current implementation of the remove method does nothing if the element is not found in the list. However, the correct way to handle an exception is to throw an exception if something unusual happens. First, you must create an exception class (check this link to have an idea \url{https://bit.ly/2HXAwx3}). Then, modify your remove method to throws an exception if the element is not found. I will test using the following code: 
+
+\begin{lstlisting}
+int main() {
+    LinkedList<int> ilist(1, 2, 10, 2, 3);
+    // if we remove an item that doesn't exist it should throw an error
+    ilist.remove(20);
+    // output: libc++abi.dylib: terminating with uncaught
+    //         exception of type NotFoundException: Element not found
+
+}
+\end{lstlisting}
+
+Finally, you must use handle correctly the exception using try and catch structure.
+  
+\begin{lstlisting}
+int main() {
+    // Correct way to handle exceptions
+    try {
+        ilist.remove(20);
+    } catch (const NotFoundException& e) {
+        cerr << e.what();
+    }
+    // output: Element not found
+}
+\end{lstlisting}
+  
+\end{enumerate}
+
+
+
+
+
+\end{document}
