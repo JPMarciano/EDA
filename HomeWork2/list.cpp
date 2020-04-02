@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// struct for raising error
 struct NotFoundException : public exception
 {
    const char* what() const throw () 
@@ -10,6 +11,8 @@ struct NotFoundException : public exception
       return "Element not found.";
    }
 };
+
+
 
 template <typename T>
 struct Node{
